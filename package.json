@@ -1,0 +1,26 @@
+{
+  "name": "csp-example",
+  "version": "0.0.1",
+  "description": "An example of a GUI created using a concurrent sequenctial programming style implemented in JavaScript using js-csp and ES6 generators.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Chris-Andrews/lights"
+  },
+  "keywords": [
+    "js-csp",
+    "example"
+  ],
+  "author": "Chris Andrews",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chris-Andrews/lights/issues"
+  },
+  "homepage": "https://github.com/Chris-Andrews/lights",
+  "dependencies": {
+    "js-csp": "^0.3.4"
+  }
+}
