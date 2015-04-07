@@ -7,7 +7,7 @@ window.onload = function() {
 
 init = function() {
 
-  var mvchan = c.chan(1);
+  var mvchan = c.chan(c.buffers.sliding(1));
   var el = document.getElementById('el1');
   el.addEventListener('mousemove',function(e){
     c.putAsync(mvchan,{evt:e,el:el});
@@ -26,17 +26,15 @@ init = function() {
     return ch;
   }
 
-  chan = c.chan();
-  c.putAsync(chan,1);
-  c.putAsync(chan,2);
-  c.putAsync(chan,3);
-
   c.go(function*() {
 
     var el = document.getElementById('el1');
     var clickch = listen(el,'mousedown');
+    var upch = listen(el,'mouseup');
     var mousePos = [0,0];
     var clickPos = [0,0];
+    el.innerHTML = (mousePos[0] + ', ' + mousePos[1] + ' - ' +
+      clickPos[0] + ', ' + clickPos[1]);
     while ((val = yield c.take(clickch)) !== c.CLOSED) {
       clickPos = [val.evt.clientX, val.evt.clientY];
       el.innerHTML = (mousePos[0] + ', ' + mousePos[1] + ' - ' +
@@ -52,19 +50,24 @@ init = function() {
           return control to parent loop
 
       */
-      // console.log(mvchan);
-      // var newchan = c.chan();
-      // dropfirst = xd.into(newchan,xform,chan);
+
 
       dropfirst = c.chan(1,xform);
-      c.operations.pipe(chan,dropfirst);
+      c.operations.pipe(mvchan,dropfirst);
 
-      // dropfirst = xd.seq(chan,xform);
-      console.log(dropfirst);
-      val = yield c.take(dropfirst);
-      console.log(val);
-      // v = yield c.take(dropfirst);
-      // console.log(yield c.take(dropfirst));
+      while ((v = yield c.alts([dropfirst,upch])) !== c.CLOSED){
+        if (v.channel === dropfirst) {
+          mousePos = [v.value.evt.clientX,v.value.evt.clientY];
+          // normalize click coords
+          // el.style.backgroundColor = rgba (x,y,0,0.5)
+          el.innerHTML = (mousePos[0] + ', ' + mousePos[1] + ' - ' +
+            clickPos[0] + ', ' + clickPos[1]);
+        }
+        else {
+          break;
+        }
+      };
+
 
     }
   });
