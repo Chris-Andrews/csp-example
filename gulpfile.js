@@ -37,15 +37,16 @@ function bundle() {
   return bundler.bundle()
     // log errors if they happen
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('bundle.js'))
+    .pipe(source('./bundle.js'))
     // optional, remove if you dont want sourcemaps
       .pipe(buffer())
       .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+      .pipe(sourcemaps.write({includeContent:false,sourceRoot:'./'}))
       .pipe(sourcemaps.write('./')) // writes .map file
     //
     .pipe(gulp.dest('./'));
 }
 
 gulp.watch('./csp-example.js', ['js']);
-gulp.watch('index.html').on('change',reload);
-gulp.watch('bundle.js').on('change',reload);
+gulp.watch('./index.html').on('change',reload);
+gulp.watch('./bundle.js').on('change',reload);
