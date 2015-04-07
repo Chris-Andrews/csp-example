@@ -22,8 +22,17 @@ gulp.task('browser-sync', function() {
 });
 
 
+var args = watchify.args;
+args.debug = true;
 
 var bundler = watchify(browserify(watchify.args));
+
+// var bundler = watchify(browserify('./client/app/app.js',
+//             // Assigning debug to have sourcemaps
+//             _.assign(watchify.args, {
+//                 debug: true
+//             })));
+
 // add the file to bundle
 bundler.add('./csp-example.js');
 // add any other browserify options or transforms here
