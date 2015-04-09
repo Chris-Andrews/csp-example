@@ -26,7 +26,7 @@ init = function() {
   });
   c.putAsync(upchan,{evt:undefined,el:undefined});
 
-
+  // var subroutineFinished = c.chan();
 
   var xform = xd.drop(1);
 
@@ -80,7 +80,6 @@ init = function() {
 
       // Also add a timeout of X seconds that will end this subroutine
 
-
       while ((v = yield c.alts([dropfirst,upch,blurch,clickch])) !== c.CLOSED){
         if (v.channel === dropfirst) {
           evt = v.value.evt;
@@ -100,6 +99,7 @@ init = function() {
           blurch.close();
           upch.close();
           // callRemoveEventListener functions to clean up
+          // yield c.put(subroutineFinished,'true');
           break;
         }
       }
