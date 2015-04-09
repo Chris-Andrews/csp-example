@@ -99,9 +99,11 @@ init = function() {
           dropfirst.close();
           blurch.close();
           upch.close();
+          // callRemoveEventListener functions to clean up
           break;
         }
       }
+      // yield c.take(subroutineFinished);
     }
   });
 
