@@ -23,6 +23,7 @@
   "dependencies": {
     "immutable": "^3.7.1",
     "js-csp": "^0.4.0",
+    "rx": "^2.5.1",
     "transducers.js": "^0.3.1"
   },
   "devDependencies": {

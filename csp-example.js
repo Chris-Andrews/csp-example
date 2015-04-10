@@ -1,5 +1,6 @@
  c = require('js-csp');
-var xd = require('transducers.js')
+var xd = require('transducers.js');
+im = require('immutable');
 
 window.onload = function() {
   init();
